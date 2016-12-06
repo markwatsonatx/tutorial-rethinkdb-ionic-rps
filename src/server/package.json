@@ -1,0 +1,21 @@
+{
+  "name": "tutorial-rethinkdb-rps-nodejs",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "npm install && nodemon -L app.js"
+  },
+  "dependencies": {
+    "bluebird": "^3.4.1",
+    "cfenv": "1.0.x",
+    "express": "4.13.x",
+    "node-uuid": "^1.4.7",
+    "nodemon": "^1.9.2",
+    "rethinkdb": "^2.3.2",
+    "websocket": "^1.0.23"
+  },
+  "repository": {},
+  "engines": {
+    "node": "4.x"
+  }
+}

@@ -1,0 +1,39 @@
+<!--<ion-navbar *navbar>-->
+  <!--<ion-title>-->
+    <!--RPS-->
+  <!--</ion-title>-->
+<!--</ion-navbar>-->
+
+<ion-content padding>
+  <p>
+    {{mainStatus}}
+  </p>
+
+  <button [disabled]="!  canPlayMove" (click)="rockButtonPressed()">
+    Rock
+  </button>
+
+  <button [disabled]="! canPlayMove" (click)="paperButtonPressed()">
+    Paper
+  </button>
+
+  <button [disabled]="! canPlayMove" (click)="scissorsButtonPressed()">
+    Scissors
+  </button>
+
+  <p>
+    {{roundStatus}}
+  </p>
+
+  <p>
+  </p>
+
+  <p>
+    {{myScoreText}}
+  </p>
+
+  <p>
+    {{otherPlayerScoreText}}
+  </p>
+
+</ion-content>
