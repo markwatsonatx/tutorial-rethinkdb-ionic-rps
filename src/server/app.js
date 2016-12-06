@@ -5,17 +5,15 @@ var http = require('http');
 var r = require('rethinkdb');
 var databaseController = require('./controllers/databaseController');
 var rpsController = require('./controllers/rpsController');
-
 var WebSocketServer = require('websocket').server;
+
+var webSocketServer;
+var games = [];
 
 var app = express();
 
-var websocketServer;
-var games = [];
-var players = [];
-
 (function(app) {
-  r.connect(config.rethinkdb, function(err, conn) {
+  r.connect(config.rethinkdb, (err, conn) => {
     if (err) {
       console.log(new Date() + ' Could not open a connection to RethinkDB.');
       console.log(new Date() + ' ' + err.message);
@@ -24,26 +22,26 @@ var players = [];
       console.log(new Date() + ' Connected to RethinkDB.');
       app.set('rethinkdb-conn', conn);
       databaseController.createDatabase(conn, config.rethinkdb.db)
-        .then(function() {
+        .then(() => {
           return databaseController.createTable(conn, 'games');
         })
-        .catch(function(err) {
+        .catch((err) => {
           console.log(new Date() + ' Error creating database and/or table: ' + err); 
         });
     }
   });
 
   // Create Websocket Server
-  var server = http.createServer(function(request, response) {
+  var server = http.createServer((request, response) => {
     console.log((new Date()) + ' WebSocket server received request for ' + request.url);
     response.writeHead(404);
     response.end();
   });
-  server.listen(config.websocket.port, function() {
+  server.listen(config.websocket.port, () => {
     console.log((new Date()) + ' WebSocket server is listening on port ' + config.websocket.port);
   });
 
-  websocketServer = new WebSocketServer({
+  webSocketServer = new WebSocketServer({
     httpServer: server,
     // You should not use autoAcceptConnections for production
     // applications, as it defeats all standard cross-origin protection
@@ -58,7 +56,7 @@ var players = [];
     return true;
   }
 
-  websocketServer.on('request', function(request) {
+  webSocketServer.on('request', (request) => {
     if (!originIsAllowed(request.origin)) {
       // Make sure we only accept requests from an allowed origin
       request.reject();
@@ -77,7 +75,7 @@ app.use(express.static(__dirname + '/public'));
 var appEnv = cfenv.getAppEnv();
 
 // start server on the specified port and binding host
-app.listen(appEnv.port, '0.0.0.0', function() {
+app.listen(appEnv.port, '0.0.0.0', () => {
   // print a message when the server starts listening
   console.log(new Date() + ' Server starting on ' + appEnv.url);
 });

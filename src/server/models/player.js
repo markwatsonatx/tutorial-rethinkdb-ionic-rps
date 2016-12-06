@@ -1,9 +1,11 @@
 var uuid = require('node-uuid');
 
-// Constructor
-function Player() {
-    this.id = uuid.v4();
-    this.moves = [];
+class Player {
+    // Constructor
+    constructor() {
+        this.id = uuid.v4();
+        this.moves = [];
+    }
 }
 
 // export the class

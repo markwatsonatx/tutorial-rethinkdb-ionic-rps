@@ -1,11 +1,10 @@
-var Promise = require('bluebird');
 var r = require('rethinkdb');
 
-module.exports.createDatabase = function(conn, databaseName) {
-    return r.dbList().run(conn).then(function(list) {
+module.exports.createDatabase = (conn, databaseName) => {
+    return r.dbList().run(conn).then((names) => {
         var dbFound = false;
-        for (var i=0; i<list.length; i++) {
-          if (list[i] == databaseName) {
+        for (name of names) {
+          if (name == databaseName) {
             dbFound = true;
             break;
           }
@@ -21,11 +20,11 @@ module.exports.createDatabase = function(conn, databaseName) {
     });
 };
 
-module.exports.createTable = function(conn, tableName) {
-    return r.tableList().run(conn).then(function(list) {
+module.exports.createTable = (conn, tableName) => {
+    return r.tableList().run(conn).then((names) => {
         var tableFound = false;
-        for (var i=0; i<list.length; i++) {
-          if (list[i] == tableName) {
+        for (name of names) {
+          if (name == tableName) {
             tableFound = true;
             break;
           }
